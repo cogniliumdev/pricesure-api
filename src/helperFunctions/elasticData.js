@@ -18,7 +18,7 @@ async function handelElasticData(props) {
         host: "https://hklnu053kl:nzh7zulpaj@paid-3-node-9829273760.us-east-1.bonsaisearch.net",
         connectionOptions: {
             headers: {
-                "authorization": "Basic aGtsbnUwNTNrbDpuemg3enVscGFq"
+                authorization: "Basic aGtsbnUwNTNrbDpuemg3enVscGFq",
             }
         },
         index: "pricesure_v3",
