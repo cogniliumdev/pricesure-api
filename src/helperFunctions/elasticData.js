@@ -15,7 +15,8 @@ async function handelElasticData(props) {
 
 
     const config = {
-        host: "https://hklnu053kl:nzh7zulpaj@paid-3-node-9829273760.us-east-1.bonsaisearch.net",
+        // host: "https://hklnu053kl:nzh7zulpaj@paid-3-node-9829273760.us-east-1.bonsaisearch.net",
+        host: "https://paid-3-node-9829273760.us-east-1.bonsaisearch.net",
         connectionOptions: {
             headers: {
                 Authorization: "Basic aGtsbnUwNTNrbDpuemg3enVscGFq",
