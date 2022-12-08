@@ -13,9 +13,14 @@ async function handelElasticData(props) {
     } = props;
 
 
+
     const config = {
         host: "https://hklnu053kl:nzh7zulpaj@paid-3-node-9829273760.us-east-1.bonsaisearch.net",
-
+        connectionOptions: {
+            headers: {
+                "authorization": "Basic aGtsbnUwNTNrbDpuemg3enVscGFq"
+            }
+        },
         index: "pricesure_v3",
         hits: {
             fields: ["rating", "vendor", "title", "category", "price", "discount", "domain"],
