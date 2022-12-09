@@ -16,7 +16,8 @@ async function handelElasticData(props) {
     //  user: hklnu053kl
     //  pass: nzh7zulpaj
     const config = {
-        host: `https://${process.env.ELASTIC_USER}:${process.env.ELASTIC_PASSWORD}@paid-3-node-9829273760.us-east-1.bonsaisearch.net`,
+        host: `https://elastic-search-url.vercel.app/`,
+        // host: `https://${process.env.ELASTIC_USER}:${process.env.ELASTIC_PASSWORD}@paid-3-node-9829273760.us-east-1.bonsaisearch.net`,
         // host: "https://paid-3-node-9829273760.us-east-1.bonsaisearch.net",
         // connectionOptions: {
         //     headers: {
