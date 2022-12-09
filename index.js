@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const { handelElasticData } = require("./src/helperFunctions/elasticData");

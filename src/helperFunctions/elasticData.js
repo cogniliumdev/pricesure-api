@@ -13,15 +13,16 @@ async function handelElasticData(props) {
     } = props;
 
 
-
+    //  user: hklnu053kl
+    //  pass: nzh7zulpaj
     const config = {
-        // host: "https://hklnu053kl:nzh7zulpaj@paid-3-node-9829273760.us-east-1.bonsaisearch.net",
-        host: "https://paid-3-node-9829273760.us-east-1.bonsaisearch.net",
-        connectionOptions: {
-            headers: {
-                Authorization: "Basic aGtsbnUwNTNrbDpuemg3enVscGFq",
-            }
-        },
+        host: `https://${process.env.ELASTIC_USER}:${process.env.ELASTIC_PASSWORD}@paid-3-node-9829273760.us-east-1.bonsaisearch.net`,
+        // host: "https://paid-3-node-9829273760.us-east-1.bonsaisearch.net",
+        // connectionOptions: {
+        //     headers: {
+        //         Authorization: "Basic aGtsbnUwNTNrbDpuemg3enVscGFq",
+        //     }
+        // },
         index: "pricesure_v3",
         hits: {
             fields: ["rating", "vendor", "title", "category", "price", "discount", "domain"],
