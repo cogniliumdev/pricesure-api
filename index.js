@@ -18,7 +18,7 @@ app.post("/elastic-data", async (req, res) => {
     }
 });
 
-app.get("/test", (req, res) => res.send("IM GETTING AN API RESPONSE"));
+app.get("/test", (req, res) => res.status(200).json({ apiRes: "IM GETTING AN API RESPONSE" }));
 
 app.listen(port, () => console.log(`server running at http://localhost:${port}`));
 

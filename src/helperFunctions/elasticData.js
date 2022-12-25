@@ -5,19 +5,22 @@ require("cross-fetch/polyfill");
 async function handelElasticData(props) {
 
     const {
-        searchQuery,
-        vendorFilter,
-        domainFilter,
-        categoryFilter,
-        sortBy,
+        searchQuery, // string value 
+        vendorFilter, // array of strings
+        domainFilter, // array of strings
+        categoryFilter, // array of strings
+        discountFilter, // array of strings 
+        sortBy, // string value
+        hitsSize, // number value
+        hits, //array of strings
     } = props;
 
 
     //  user: hklnu053kl
     //  pass: nzh7zulpaj
     const config = {
-        host: `https://elastic-search-url.vercel.app/`,
-        // host: `https://${process.env.ELASTIC_USER}:${process.env.ELASTIC_PASSWORD}@paid-3-node-9829273760.us-east-1.bonsaisearch.net`,
+        host: `https://${process.env.ELASTIC_USER}:${process.env.ELASTIC_PASSWORD}@paid-3-node-9829273760.us-east-1.bonsaisearch.net`,
+        // host: `https://elastic-search-url.vercel.app/`,
         // host: "https://paid-3-node-9829273760.us-east-1.bonsaisearch.net",
         // connectionOptions: {
         //     headers: {
@@ -26,7 +29,8 @@ async function handelElasticData(props) {
         // },
         index: "pricesure_v3",
         hits: {
-            fields: ["rating", "vendor", "title", "category", "price", "discount", "domain"],
+            // fields: ["rating", "vendor", "title", "category", "price", "discount", "domain"],
+            fields: hits,
         },
 
         query: new searchKit.MultiMatchQuery({
@@ -41,23 +45,32 @@ async function handelElasticData(props) {
         ],
 
         facets: [
-            new searchKit.MultiQueryOptionsFacet({
+            // new searchKit.MultiQueryOptionsFacet({
+            //     field: 'domain',
+            //     identifier: 'domain',
+            //     multipleSelect: true,
+            //     label: "domain",
+            //     options: [
+            //         { value: "galaxydoreen.com", label: "galaxydoreen.com", },
+            //         { value: "laam.pk", label: "laam.pk", },
+            //         { value: "secretstash.pk", label: "secretstash.pk", },
+            //     ]
+            // }),
+
+            new searchKit.RefinementSelectFacet({
                 field: 'domain',
                 identifier: 'domain',
                 multipleSelect: true,
                 label: "domain",
-                options: [
-                    { value: "galaxydoreen.com", label: "galaxydoreen.com", },
-                    { value: "laam.pk", label: "laam.pk", },
-                    { value: "secretstash.pk", label: "secretstash.pk", },
-                ]
+                size: 10000
             }),
 
             new searchKit.RefinementSelectFacet({
                 field: 'vendor',
                 identifier: 'vendor',
-                label: "vandor",
                 multipleSelect: true,
+                label: "vendor",
+                size: 10000
             }),
 
             new searchKit.RefinementSelectFacet({
@@ -65,7 +78,16 @@ async function handelElasticData(props) {
                 identifier: 'category',
                 label: "category",
                 multipleSelect: true,
+                size: 10000
             }),
+        ],
+
+        filters: [
+            new searchKit.Filter({
+                identifier: "discount",
+                field: "discount",
+                label: "discount"
+            })
         ]
     };
 
@@ -90,6 +112,10 @@ async function handelElasticData(props) {
         })
     }
 
+    if (discountFilter) {
+        filtersList.push({ identifier: "discount", min: discountFilter.minDiscount, max: discountFilter.maxDiscount })
+    }
+
     const request = searchKit.default(config);
     const response = await request
         .query(searchQuery)
@@ -99,12 +125,10 @@ async function handelElasticData(props) {
             facets: true,
             hits: {
                 from: 0,
-                size: 30,
+                size: hitsSize,
             },
         });
 
-    // console.log(util.inspect(filtersList, { showHidden: true, depth: null, colors: true }));
-    // console.log(util.inspect(response, { showHidden: true, depth: null, colors: true }));
     return response;
 }
 
@@ -116,7 +140,9 @@ module.exports = { handelElasticData };
     // vendorFilter: ["EMILY", "H&S Collection"],
     // vendorFilter: ["OPPO", "VIVO", "TECNO", "REALME"],
     // searchQuery: "nokia",
-    // sortBy: "price-descending"
+    // sortBy: "price-descending",
+    // discountFilter: {minDiscount: 5 , maxDiscount: 70}
+    // hitsSize: 40,
 // });
 
 
