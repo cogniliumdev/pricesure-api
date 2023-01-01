@@ -12,12 +12,14 @@ async function handelElasticData(props) {
         discountFilter, // array of strings 
         sortBy, // string value
         hitsSize, // number value
+        from, // number value
         hits, //array of strings
     } = props;
 
 
     //  user: hklnu053kl
     //  pass: nzh7zulpaj
+    
     const config = {
         host: `https://${process.env.ELASTIC_USER}:${process.env.ELASTIC_PASSWORD}@paid-3-node-9829273760.us-east-1.bonsaisearch.net`,
         // host: `https://elastic-search-url.vercel.app/`,
@@ -124,8 +126,8 @@ async function handelElasticData(props) {
         .execute({
             facets: true,
             hits: {
-                from: 0,
-                size: hitsSize,
+                from: from ? from : 0,
+                size: hitsSize ? hitsSize : 50,
             },
         });
 
